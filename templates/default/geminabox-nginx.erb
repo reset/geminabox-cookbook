@@ -1,4 +1,4 @@
-upstream app_server {
+upstream gem_server {
   server 127.0.0.1:<%= node[:gem_server][:port] %> fail_timeout=0;
 }
 
@@ -11,7 +11,7 @@ server {
     proxy_set_header Host $http_host;
     proxy_redirect off;
     if (!-f $request_filename) {
-      proxy_pass http://app_server;
+      proxy_pass http://gem_server;
       break;
     }
   }
