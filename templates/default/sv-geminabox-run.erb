@@ -1,0 +1,8 @@
+#!/bin/sh
+
+export RBENV_ROOT=<%= node[:rbenv][:root] %>
+export RBENV_VERSION=<%= node[:geminabox][:ruby_version] %>
+export PATH=<%= node[:rbenv][:root] %>/shims:$PATH
+
+exec 2>&1
+exec unicorn <%= node[:geminabox][:home_path] %>/geminabox.ru -p <%= node[:geminabox][:port] %>
