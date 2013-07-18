@@ -8,5 +8,6 @@ version          '0.1.0'
 
 supports 'ubuntu'
 
+depends 'runit'
 depends 'rbenv', '>= 1.5.0'
 depends 'nginx', '>= 1.7.0'
