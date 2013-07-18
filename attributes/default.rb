@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: geminabox
+# Cookbook Name:: gem_server
 # Attribute:: default
 #
 # Copyright (C) 2013 Jamie Winsor
@@ -17,9 +17,9 @@
 # limitations under the License.
 #
 
-default[:geminabox][:ruby_version] = "1.9.3-p448"
-default[:geminabox][:version]      = nil
-default[:geminabox][:port]         = 9010
-default[:geminabox][:host]         = node[:fqdn]
-default[:geminabox][:home_path]    = "/opt/geminabox"
-default[:geminabox][:data_path]    = "#{node[:geminabox][:home_path]}/data"
+default[:gem_server][:ruby_version] = "1.9.3-p448"
+default[:gem_server][:version]      = nil
+default[:gem_server][:port]         = 9010
+default[:gem_server][:host]         = node[:fqdn]
+default[:gem_server][:home_path]    = "/opt/geminabox"
+default[:gem_server][:data_path]    = "#{node[:gem_server][:home_path]}/data"

@@ -1,4 +1,4 @@
-# geminabox-cookbook
+# gem_server cookbook
 
 # Requirements
 

@@ -20,8 +20,8 @@ Vagrant.configure("2") do |config|
 
   config.vm.provision :chef_solo do |chef|
     chef.run_list = [
-      "recipe[geminabox::default]",
-      "recipe[geminabox::proxy]"
+      "recipe[gem_server::default]",
+      "recipe[gem_server::proxy]"
     ]
   end
 end

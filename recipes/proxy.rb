@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: geminabox
+# Cookbook Name:: gem_server
 # Recipe:: proxy
 #
 # Copyright (C) 2013 Jamie Winsor

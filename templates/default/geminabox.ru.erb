@@ -1,5 +1,5 @@
 require "rubygems"
 require "geminabox"
 
-Geminabox.data = "<%= node[:geminabox][:data_path] %>"
+Geminabox.data = "<%= node[:gem_server][:data_path] %>"
 run Geminabox

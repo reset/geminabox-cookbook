@@ -1,10 +1,10 @@
 upstream app_server {
-  server 127.0.0.1:<%= node[:geminabox][:port] %> fail_timeout=0;
+  server 127.0.0.1:<%= node[:gem_server][:port] %> fail_timeout=0;
 }
 
 server {
   listen 80 default;
-  server_name <%= node[:geminabox][:host] %>;
+  server_name <%= node[:gem_server][:host] %>;
 
   location / {
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;

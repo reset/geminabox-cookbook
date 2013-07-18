@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: geminabox
+# Cookbook Name:: gem_server
 # Recipe:: default
 #
 # Copyright (C) 2013 Jamie Winsor
@@ -17,4 +17,4 @@
 # limitations under the License.
 #
 
-include_recipe "geminabox::server"
+include_recipe "gem_server::server"

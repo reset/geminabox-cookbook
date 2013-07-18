@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: geminabox
+# Cookbook Name:: gem_server
 # Recipe:: server
 #
 # Copyright (C) 2013 Jamie Winsor
@@ -20,21 +20,21 @@
 include_recipe "rbenv"
 include_recipe "rbenv::ruby_build"
 
-rbenv_ruby node[:geminabox][:ruby_version]
+rbenv_ruby node[:gem_server][:ruby_version]
 
 rbenv_gem "unicorn" do
-  ruby_version node[:geminabox][:ruby_version]
+  ruby_version node[:gem_server][:ruby_version]
 end
 
 rbenv_gem "geminabox" do
-  version node[:geminabox][:version]
-  ruby_version node[:geminabox][:ruby_version]
+  version node[:gem_server][:version]
+  ruby_version node[:gem_server][:ruby_version]
 end
 
-directory node[:geminabox][:home_path]
-directory node[:geminabox][:data_path]
+directory node[:gem_server][:home_path]
+directory node[:gem_server][:data_path]
 
-template "#{node[:geminabox][:home_path]}/geminabox.ru" do
+template "#{node[:gem_server][:home_path]}/geminabox.ru" do
   source "geminabox.ru.erb"
   notifies :restart, "runit_service[geminabox]"
 end
