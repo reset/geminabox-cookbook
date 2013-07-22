@@ -3,7 +3,7 @@ upstream gem_server {
 }
 
 server {
-  listen 80 default;
+  listen 80;
   server_name <%= node[:gem_server][:host] %>;
 
   location / {
