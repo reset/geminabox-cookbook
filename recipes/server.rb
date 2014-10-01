@@ -17,6 +17,7 @@
 # limitations under the License.
 #
 
+include_recipe 'runit'
 include_recipe "rbenv"
 include_recipe "rbenv::ruby_build"
 
