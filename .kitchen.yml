@@ -4,6 +4,10 @@ driver_config:
   require_chef_omnibus: true
 
 platforms:
+- name: ubuntu-14.04
+  driver_config:
+    box: opscode-ubuntu-14.04
+    box_url: https://opscode-vm.s3.amazonaws.com/vagrant/opscode_ubuntu-14.04_provisionerless.box
 - name: ubuntu-12.04
   driver_config:
     box: opscode-ubuntu-12.04
@@ -23,5 +27,6 @@ platforms:
 
 suites:
 - name: default
-  run_list: ["recipe[geminabox]"]
-  attributes: {}
+  run_list:
+    - recipe[gem_server::default]
+  attributes:
