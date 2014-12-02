@@ -2,4 +2,9 @@ require "rubygems"
 require "geminabox"
 
 Geminabox.data = "<%= node[:gem_server][:data_path] %>"
+
+<% %w(rubygems_proxy allow_remote_failure).each do |setting| %>
+Geminabox.<%= setting %> = <%= node[:gem_server][setting] %>
+<% end %>
+
 run Geminabox
