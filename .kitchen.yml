@@ -26,7 +26,21 @@ platforms:
     box_url: https://opscode-vm.s3.amazonaws.com/vagrant/opscode_centos-5.9_provisionerless.box
 
 suites:
-- name: default
+- name: bare
   run_list:
     - recipe[gem_server::default]
   attributes:
+
+- name: nginx
+  run_list:
+    - recipe[gem_server::default]
+    - recipe[gem_server::proxy]
+  attributes:
+
+- name: rubygems_proxy
+  run_list:
+    - recipe[gem_server::default]
+  attributes:
+    gem_server:
+      rubygems_proxy: true
+      allow_remote_failure: true
