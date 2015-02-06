@@ -25,3 +25,7 @@ default[:gem_server][:home_path]            = "/opt/geminabox"
 default[:gem_server][:data_path]            = "#{node[:gem_server][:home_path]}/data"
 default[:gem_server][:rubygems_proxy]       = false
 default[:gem_server][:allow_remote_failure] = false
+
+default[:gem_server][:authentication][:readers] = nil # { "user1" => "pass1", ... }
+default[:gem_server][:authentication][:writers] = nil # { "user2" => "pass2", ... }
+

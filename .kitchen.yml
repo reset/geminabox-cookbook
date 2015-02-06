@@ -44,3 +44,14 @@ suites:
     gem_server:
       rubygems_proxy: true
       allow_remote_failure: true
+
+- name: auth
+  run_list:
+    - recipe[gem_server::default]
+  attributes:
+    gem_server:
+      authentication:
+        readers:
+          joe: "read"
+        writers:
+          bob: "write"
