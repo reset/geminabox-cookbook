@@ -3,8 +3,80 @@ require "geminabox"
 
 Geminabox.data = "<%= node[:gem_server][:data_path] %>"
 
-<% %w(rubygems_proxy allow_remote_failure).each do |setting| %>
+# Settings
+<% %w(rubygems_proxy allow_remote_failure).each do |setting| -%>
 Geminabox.<%= setting %> = <%= node[:gem_server][setting] %>
-<% end %>
+<% end -%>
 
-run Geminabox
+
+# Readers
+<%
+@readers = node[:gem_server][:authentication][:readers] || {}
+raise "readers is not a hash" unless @readers.is_a?(Hash)
+-%>
+READERS = {
+<% @readers.each do |k, v| -%>
+  "<%= k %>" => "<%= v %>",
+<% end -%>
+}
+
+
+# Writers
+<%
+@writers = node[:gem_server][:authentication][:writers] || {}
+raise "writers is not a hash" unless @writers.is_a?(Hash)
+-%>
+WRITERS = {
+<% @writers.each do |k, v| -%>
+  "<%= k %>" => "<%= v %>",
+<% end -%>
+}
+
+
+# Read authorization required?
+# https://github.com/geminabox/geminabox/wiki/Http-Basic-Auth
+<% unless @readers.empty? -%>
+use Rack::Auth::Basic, "GemInAbox" do |username, password|
+  READERS[username] == password || WRITERS[username] == password
+end
+<% end -%>
+
+
+# Write authorization required?
+# https://github.com/geminabox/geminabox/wiki/Http-Basic-Auth
+<% unless @writers.empty? -%>
+Geminabox::Server.helpers do
+  def protected!
+    unless authorized?
+      response['WWW-Authenticate'] = %(Basic realm="Geminabox")
+      halt 401, "No pushing or deleting without auth.\n"
+    end
+  end
+
+  def authorized?
+    @auth ||=  Rack::Auth::Basic::Request.new(request.env)
+    return false unless @auth.provided?
+    return false unless @auth.basic?
+    return false unless @auth.credentials
+
+    username = @auth.credentials[0]
+    password = @auth.credentials[1]
+    WRITERS[username] == password
+  end
+end
+
+Geminabox::Server.before '/upload' do
+  protected!
+end
+
+Geminabox::Server.before do
+  protected! if request.delete?
+end
+
+Geminabox::Server.before '/api/v1/gems' do
+  halt 401, "Access Denied. Api_key invalid or missing.\n"
+end
+<% end -%>
+
+
+run Geminabox::Server
