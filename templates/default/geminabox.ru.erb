@@ -8,7 +8,6 @@ Geminabox.data = "<%= node[:gem_server][:data_path] %>"
 Geminabox.<%= setting %> = <%= node[:gem_server][setting] %>
 <% end -%>
 
-
 # Readers
 <%
 @readers = node[:gem_server][:authentication][:readers] || {}
@@ -19,7 +18,6 @@ READERS = {
   "<%= k %>" => "<%= v %>",
 <% end -%>
 }
-
 
 # Writers
 <%
@@ -32,7 +30,6 @@ WRITERS = {
 <% end -%>
 }
 
-
 # Read authorization required?
 # https://github.com/geminabox/geminabox/wiki/Http-Basic-Auth
 <% unless @readers.empty? -%>
@@ -40,7 +37,6 @@ use Rack::Auth::Basic, "GemInAbox" do |username, password|
   READERS[username] == password || WRITERS[username] == password
 end
 <% end -%>
-
 
 # Write authorization required?
 # https://github.com/geminabox/geminabox/wiki/Http-Basic-Auth
@@ -77,6 +73,5 @@ Geminabox::Server.before '/api/v1/gems' do
   halt 401, "Access Denied. Api_key invalid or missing.\n"
 end
 <% end -%>
-
 
 run Geminabox::Server
